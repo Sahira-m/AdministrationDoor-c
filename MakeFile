@@ -1,0 +1,16 @@
+make clean
+PROG=inl2.exe
+CC=gcc
+CFLAGS=-g -Wall
+DEPS = safeinput.h menu.h
+
+menu.o: menu.c menu.h
+    cc -c menu.c
+
+OBJ = menu.o main.o 
+%.o: %.c $(DEPS)
+    $(CC) -c -o $@ $< $(CFLAGS)
+
+$(PROG): $(OBJ)
+    $(CC) -o $@ $^ $(CFLAGS)
+ 
