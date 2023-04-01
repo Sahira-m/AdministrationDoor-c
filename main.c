@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include "menu.h"
 #include <conio.h>
-
-void main()
+// #include <stdlib.h>
+#include "menu.h"
+int main()
 {
 
     MenuPresentation();
@@ -16,8 +16,11 @@ void main()
         switch (selection)
         {
         case REMOTEOPENDOOR:
+        {
             printf("CURRENT LAMP IS :GREEN ");
-            break;
+            addCard(5U);
+        }
+        break;
         case LIST_ALL_CARDS:
             listCardDetails();
             break;
@@ -41,5 +44,7 @@ void main()
             break;
         }
     }
-    getch();
+
+    // getch();
+    return 0;
 }

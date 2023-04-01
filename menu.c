@@ -5,8 +5,6 @@
 #include <conio.h>
 #include <time.h>
 #include "menu.h"
-
-// static int functionLastIndex(unsigned int);
 typedef struct
 {
     int cardNumber;
@@ -17,7 +15,7 @@ typedef struct
 unsigned int readOption()
 {
     unsigned int option;
-    printf("\t \t Enter Your choice    :");
+    printf("\t \t \n  Enter Your choice    :");
     scanf("%d", &option);
     return option;
 }
@@ -37,7 +35,7 @@ int functionLastIndex(unsigned int choice)
     else
     {
         ch = getw(filesRead);
-        if (choice == 5)
+        if (choice == ADD_CARD)
         {
             lastIndexStored = ch + 1;
         }
@@ -60,7 +58,7 @@ void listCardDetails()
     int index;
     FILE *cardReads;
     fopen_s(&cardReads, "data.bin", "rb");
-    char accesString[3];
+    char accesString[4];
     printf(" \n All cards in System");
     char msgAcess[40] = "Access available on";
     char msgNoAcess[40] = "No access ";
@@ -115,7 +113,7 @@ void MenuPresentation(void)
     printf("\t\t PRESS 3. ADD or REMOVE ACCESS\n");
     printf("\t\t PRESS 4. EXIT\n");
     printf("\t\t PRESS 5. ADD CARDS \n", ' ');
-    printf("\t\t PRESS 9. FAKE TEST SCAN CARD\n");
+    printf("\t\t PRESS 9. FAKE TEST SCAN CARD");
 }
 
 void accessChange(void)
@@ -146,10 +144,14 @@ void accessChange(void)
     if (cardfound == 1)
     {
         printf("\n Current access is %d", access);
-        printf("Enter one to change access \n");
+        printf("Enter 0 or 1 to change access \n");
         scanf("%d", &changeAcces);
         FILE *input = fopen("data.bin", "ab");
-        card[indexValue].access = 1;
+        time_t t = time(NULL);
+        struct tm *tm = localtime(&t);
+
+        strcpy(card[indexValue].dates, asctime(tm));
+        card[indexValue].access = changeAcces;
         fwrite(&card, sizeof(Card), 1, input);
     }
     else
@@ -163,7 +165,7 @@ char CheckifCardexist(unsigned int readCardNumber)
     Card card[1000];
     int i = 0;
     char cardnumberUpdatestatus = 0;
-    int index = functionLastIndex(0);
+    int index = functionLastIndex(0U);
     fopen_s(&cardReads, "data.bin", "rb");
     if (cardReads == NULL)
     {
@@ -172,11 +174,16 @@ char CheckifCardexist(unsigned int readCardNumber)
     }
     while (i <= index)
     {
+
         fread(&card[i], sizeof(Card), 1, cardReads);
         if (card[i].cardNumber == readCardNumber)
         {
-            printf("Card Number exist\n");
             cardnumberUpdatestatus = 1;
+
+            if (card[i].access == 0)
+                printf("\n \t RED LIGHT");
+            else
+                printf("\n \t  GREEN LIGHT");
             break;
         }
         else
@@ -188,19 +195,19 @@ char CheckifCardexist(unsigned int readCardNumber)
         i++;
     }
     fclose(cardReads);
-    printf(" fun ret status%d", cardnumberUpdatestatus);
+
     return cardnumberUpdatestatus;
 }
 
 void addCard(unsigned int choice)
 {
     int index = functionLastIndex(choice);
-    printf("Last index is:%d", index);
-    int result, i = 0;
+    int i = 0;
+    char result;
     Card card;
     unsigned int readCardNumber;
     char cardnumberUpdatestatus = 0;
-    printf("Enter Card number 0-9999\n");
+    printf("Enter Card number 0000-9999\n");
     scanf("%d", &readCardNumber);
     result = CheckifCardexist(readCardNumber);
     time_t t = time(NULL);
@@ -208,16 +215,18 @@ void addCard(unsigned int choice)
     card.cardNumber = readCardNumber;
     card.access = 1;
     strcpy(card.dates, asctime(tm));
-    FILE *input = fopen("data.bin", "ab");
-    printf(" result :%d ", result);
-    if (result = 0)
+    if (result == 1)
     {
-        printf("\n The card number already exist");
+        printf("\n The entered card number  exist in file");
     }
     else
     {
+
+        FILE *input = fopen("data.bin", "ab");
         fwrite(&card, sizeof(Card), 1, input);
+        fclose(input);
+        printf("/n Your enterde card number added to file Succefully");
     }
-    fclose(input);
+
     i++;
 }
