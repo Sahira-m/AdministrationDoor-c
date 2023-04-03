@@ -209,6 +209,7 @@ void addCard(unsigned int choice)
     int index;
     char result;
     Card card;
+    /* Card number*/
     unsigned int readCardNumber;
     char cardnumberUpdatestatus = 0;
     printf("Enter Card number 0000-9999\n");
