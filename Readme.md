@@ -41,7 +41,3 @@ Insructions:
 Cards must be SAVED in FILE! In other words, after restarting, all cards must be read out and remain
 
 Branch with alternative implementation: make a version WITHOUT dynamic memory allocation (and no static array either...but you should still manage "infinitely" many cards !). That means you get to read ONE AT A TIME
-
-all the time from file, more info https://youtu.be/GqKZFzM9COA
-
-Good code, best practices, etc
