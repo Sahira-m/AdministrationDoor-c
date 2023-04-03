@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "menu.h"
+#include "menu1.h"
 int main()
 {
 
@@ -17,14 +17,10 @@ int main()
         case REMOTEOPENDOOR:
         {
             printf("CURRENT LAMP IS :GREEN ");
-            addCard(5U);
         }
         break;
         case LIST_ALL_CARDS:
             listCardDetails();
-            break;
-        case CHANGE_ACCESS:
-            accessChange();
             break;
         case EXIT_MENU:
             exit(0);
@@ -32,7 +28,7 @@ int main()
         case ADD_CARD:
 
             printf("ADD CARD");
-            addCard(5U);
+            addCard();
             break;
         case INVALID_CARD:
             printf("CURRENT LAMP IS :RED ");
@@ -44,6 +40,5 @@ int main()
         }
     }
 
-    // getch();
     return 0;
 }
