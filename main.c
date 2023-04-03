@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include <conio.h>
-// #include <stdlib.h>
+#include <stdlib.h>
 #include "menu.h"
 int main()
 {
@@ -28,7 +27,7 @@ int main()
             accessChange();
             break;
         case EXIT_MENU:
-            // exit(0);
+            exit(0);
             break;
         case ADD_CARD:
 
